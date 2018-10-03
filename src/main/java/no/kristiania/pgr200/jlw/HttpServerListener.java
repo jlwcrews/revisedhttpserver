@@ -7,12 +7,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class HttpServerListener {
-
-    private int port;
     private int actualPort;
 
-    public HttpServerListener(int port) {
-        this.port = port;
+    public HttpServerListener() {
+        System.out.println("Starting server... \n");
     }
 
     public void start() throws IOException {
@@ -36,15 +34,5 @@ public class HttpServerListener {
 
     public int getPort() {
         return actualPort;
-    }
-
-    public static void main(String[] args) {
-        HttpServerListener server = new HttpServerListener(0);
-        try {
-            server.start();
-        } catch (IOException e) {
-            System.out.println("Error starting server.");
-            e.printStackTrace();
-        }
     }
 }

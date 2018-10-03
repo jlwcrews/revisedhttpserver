@@ -13,7 +13,7 @@ public class HttpServerTest {
 
     @BeforeClass
     public static void startServer() throws IOException {
-        server = new HttpServerListener(0);
+        server = new HttpServerListener();
         server.start();
     }
 
@@ -99,10 +99,4 @@ public class HttpServerTest {
         assertThat(response.getStatusCode()).isEqualTo(200);
         assertThat(response.getBody().isEmpty());
     }
-
-    public static void main(String[] args) throws IOException {
-
-    }
-
-
 }
