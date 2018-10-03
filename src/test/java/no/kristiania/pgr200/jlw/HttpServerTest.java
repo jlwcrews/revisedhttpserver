@@ -88,6 +88,16 @@ public class HttpServerTest {
                 "status=200&body=hello+idiot");
         HttpClientResponse response = request.execute();
         assertThat(response.getStatusCode()).isEqualTo(200);
+        assertThat(response.getBody().contains("hello idiot"));
+    }
+
+    @Test
+    public void shouldHandleNoBodyPOST() throws IOException{
+        HttpClientPOSTRequest request = new HttpClientPOSTRequest("localhost", server.getPort(), "/echo",
+                "");
+        HttpClientResponse response = request.execute();
+        assertThat(response.getStatusCode()).isEqualTo(200);
+        assertThat(response.getBody().isEmpty());
     }
 
     public static void main(String[] args) throws IOException {

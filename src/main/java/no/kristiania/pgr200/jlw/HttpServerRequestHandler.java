@@ -1,7 +1,5 @@
 package no.kristiania.pgr200.jlw;
 
-import jdk.internal.util.xml.impl.Input;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
