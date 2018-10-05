@@ -13,6 +13,7 @@ public class HttpServerRequest {
     private InputStream input;
     private String HttpMethod, HttpVersion, URL, body, path;
     private HashMap<String, String> headers, parameters;
+    private int statusCode;
 
 
     public HttpServerRequest() {
@@ -20,7 +21,9 @@ public class HttpServerRequest {
         parameters = new HashMap<>();
     }
 
-
+    public HttpServerRequest(int statusCode){
+        this.statusCode = statusCode;
+    }
 
     public String getHttpMethod() {
         return HttpMethod;
@@ -44,6 +47,14 @@ public class HttpServerRequest {
 
     public void setURL(String URL) {
         this.URL = URL;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getHeader(String key) {

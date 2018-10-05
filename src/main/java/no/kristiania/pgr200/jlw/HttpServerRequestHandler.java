@@ -26,9 +26,16 @@ public class HttpServerRequestHandler extends Thread {
         //Create object to hold final response
         HttpServerResponse response = new HttpServerResponse();
         //create object to hold the request
-        HttpServerRequest request = new HttpServerRequest();
+        HttpServerRequest request;
         //create parser
-        HttpServerParser parser = new HttpServerParser(request, input);
+        HttpServerParser parser = new HttpServerParser();
+        //return a parsed request
+        try {
+            request = parser.parse(input);
+        } catch (IOException e) {
+            request = new HttpServerRequest(400);
+            System.out.println("Error parsing the input stream.");
+        }
         //instantiate the builder factory
         HttpServerResponseBuilderFactory builderFactory = new HttpServerResponseBuilderFactory(request, response);
         //create the builder, which populates the response object
