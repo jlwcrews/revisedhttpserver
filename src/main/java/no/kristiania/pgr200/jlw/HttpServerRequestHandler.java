@@ -12,6 +12,8 @@ public class HttpServerRequestHandler extends Thread {
     private OutputStream output;
 
     public HttpServerRequestHandler(Socket clientSocket) {
+        System.out.println();
+
         this.clientSocket = clientSocket;
         try {
             input = clientSocket.getInputStream();
@@ -22,7 +24,7 @@ public class HttpServerRequestHandler extends Thread {
         }
     }
 
-    public void start(){
+    public void run(){
         //Create object to hold final response
         HttpServerResponse response = new HttpServerResponse();
         //create object to hold the request
@@ -36,6 +38,9 @@ public class HttpServerRequestHandler extends Thread {
             request = new HttpServerRequest(400);
             System.out.println("Error parsing the input stream.");
         }
+        //instantiate the resource loader - test idea, not sold on it yet
+        //HttpServerResourceLoader loader = new HttpServerResourceLoader(request);
+
         //instantiate the builder factory
         HttpServerResponseBuilderFactory builderFactory = new HttpServerResponseBuilderFactory(request, response);
         //create the builder, which populates the response object

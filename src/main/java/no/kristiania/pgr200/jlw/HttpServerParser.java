@@ -9,6 +9,7 @@ public class HttpServerParser {
 
     public HttpServerRequest request;
     public InputStream input;
+    private int statusCode = 200;
 
     public HttpServerRequest parse(InputStream input) throws IOException {
         request = new HttpServerRequest();
@@ -16,6 +17,7 @@ public class HttpServerParser {
         parseRequestLine();
         parseHeaderLines();
         parseBody();
+        request.setStatusCode(statusCode);
         return request;
     }
 
@@ -23,14 +25,18 @@ public class HttpServerParser {
         try {
             String[] s = HttpUtils.readNextLine(input).split("[ ]");
             request.setHttpMethod(s[0]);
-            request.setURL(s[1].substring(1));
+            if(!s[1].isEmpty()) {
+                request.setURL(s[1].substring(1));
+            } else {
+                request.setURL("");
+            }
             request.setHttpVersion(s[2]);
             parseParameters(parsePath());
         } catch(IndexOutOfBoundsException e){
-            request.setStatusCode(400);
+            setStatusCode(400);
             System.out.println("Index out of bounds on parseRequestLine in HttpServerParser.");
         } catch(NullPointerException e){
-            request.setStatusCode(400);
+            setStatusCode(400);
             System.out.println("Null pointer exception on parseRequestLine in HttpServerParser.");
         }
     }
@@ -53,7 +59,7 @@ public class HttpServerParser {
                 try {
                     request.setParameter(param.substring(0, delimiterPos), URLDecoder.decode(param.substring(delimiterPos + 1), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
-                    request.setStatusCode(400);
+                    setStatusCode(400);
                     System.out.println("Error parsing parameters");
                 }
             }
@@ -78,14 +84,17 @@ public class HttpServerParser {
                         int c = input.read();
                         body.append((char) c);
                     } catch (IOException e) {
-                        request.setStatusCode(400);
+                        setStatusCode(400);
                     }
                 }
             }
             parseParameters(body.toString());
         } catch(NullPointerException npe){
-            request.setStatusCode(400);
+            setStatusCode(400);
             System.out.println("Null pointer exception in parseBody.");
         }
+    }
+    private void setStatusCode(int i) {
+        statusCode = i;
     }
 }

@@ -7,6 +7,7 @@ public class HttpClientGETRequest {
 
     private String hostname;
     private String path;
+    private String method = "GET";
     private int port;
 
     public HttpClientGETRequest(String hostname, int port, String path) {
@@ -15,10 +16,17 @@ public class HttpClientGETRequest {
         this.port = port;
     }
 
+    public HttpClientGETRequest(String hostname, int port, String path, String method) {
+        this.hostname = hostname;
+        this.path = path;
+        this.port = port;
+        this.method = method;
+    }
+
     public HttpClientResponse execute() throws IOException {
         try(Socket socket = new Socket(hostname, port)) {
             socket.getOutputStream()
-                    .write(("GET " + path + " HTTP/1.1\r\n").getBytes());
+                    .write((method + " " + path + " HTTP/1.1\r\n").getBytes());
             socket.getOutputStream()
                     .write(("Host: " + hostname + "\r\n").getBytes());
             socket.getOutputStream()

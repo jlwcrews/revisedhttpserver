@@ -14,6 +14,7 @@ public class HttpServerListener {
     }
 
     public void start() throws IOException {
+        HttpServerConfig config = new HttpServerConfig();
         ServerSocket serverSocket = new ServerSocket(0);
         this.actualPort = serverSocket.getLocalPort();
         new Thread(() ->  serverThread(serverSocket)).start();
