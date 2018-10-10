@@ -13,14 +13,9 @@ import static java.util.stream.Collectors.toMap;
 public class HttpServerConfig {
 
     public static String WEB_ROOT, DEFAULT_FILE, FILE_NOT_FOUND, METHOD_NOT_SUPPORTED, SERVER_NAME;
-    public HashMap<String, String> serverConfig = new HashMap<>();
+    public static HashMap<String, String> serverConfig = new HashMap<>();
 
-    public HttpServerConfig(){
-        loadConfig();
-        setConfig();
-    }
-
-    private void loadConfig() {
+    static {
         String line;
         String configFile = "server.config";
         try {
@@ -42,10 +37,9 @@ public class HttpServerConfig {
         } catch (IOException e) {
             System.out.println("Error reading server.config.");
         }
-    }
 
-    private void setConfig(){
         WEB_ROOT = serverConfig.get("WEB_ROOT").trim();
+        System.out.println("WEB_ROOT = " + WEB_ROOT);
         DEFAULT_FILE = serverConfig.get("DEFAULT_FILE").trim();
         FILE_NOT_FOUND = serverConfig.get("FILE_NOT_FOUND").trim();
         METHOD_NOT_SUPPORTED = serverConfig.get("METHOD_NOT_SUPPORTED").trim();

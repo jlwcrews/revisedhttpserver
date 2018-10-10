@@ -14,6 +14,7 @@ public class HttpServerRequestHandlerURL implements HttpServerRequestHandler{
         }
         if(request.getPath().isEmpty()){
             resourceName = HttpServerConfig.DEFAULT_FILE;
+            System.out.println("Default file: " + HttpServerConfig.DEFAULT_FILE);
         } else{
             resourceName = request.getPath();
         }
@@ -32,6 +33,7 @@ public class HttpServerRequestHandlerURL implements HttpServerRequestHandler{
                 br.close();
                 response.setBody(fileContents.toString());
                 response.setContentType(getContentType(file));
+                response.setStatusCode(200);
 
             } catch (FileNotFoundException e) {
                 response.setStatusCode(404);

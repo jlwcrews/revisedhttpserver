@@ -16,9 +16,9 @@ public class HttpServerTest {
     @BeforeClass
     public static void startServer() throws IOException {
         server = new HttpServerListener(
-                Arrays.asList(new HttpServerRequestHandlerURL(),
+                Arrays.asList(new HttpServerRequestHandlerEcho(),
                         new HttpServerRequestHandlerEcho(),
-                        new HttpServerRequestHandlerTalk()),
+                        new HttpServerRequestHandlerURL()),
                 new HttpServerParserRequest(),
                 new HttpServerWriterResponse()
         );
@@ -26,7 +26,6 @@ public class HttpServerTest {
     }
 
     @Test
-    @Ignore
     public void shouldReturnResource() throws IOException {
         HttpClientGETRequest request = new HttpClientGETRequest("localhost", server.getPort(), "/");
         HttpClientResponse response = request.execute();
@@ -80,8 +79,7 @@ public class HttpServerTest {
     }
 
     @Test
-    @Ignore
-    public void shouldHandleEmptyParam() throws IOException {
+    public void shouldHandleEchoEmptyParam() throws IOException {
         HttpClientGETRequest request = new HttpClientGETRequest("localhost", server.getPort(),
                 "/echo?");
         HttpClientResponse response = request.execute();
@@ -91,8 +89,7 @@ public class HttpServerTest {
     }
 
     @Test
-    @Ignore
-    public void shouldHandleNoParams() throws IOException {
+    public void shouldHandleEchoNoParams() throws IOException {
         HttpClientGETRequest request = new HttpClientGETRequest("localhost", server.getPort(),
                 "/echo");
         HttpClientResponse response = request.execute();
@@ -102,7 +99,6 @@ public class HttpServerTest {
     }
 
     @Test
-    @Ignore
     public void shouldWriteStatusCodePOST() throws IOException {
         HttpClientPOSTRequest request = new HttpClientPOSTRequest("localhost", server.getPort(), "/echo",
                 "status=200&body=hello+idiot");
@@ -112,7 +108,6 @@ public class HttpServerTest {
     }
 
     @Test
-    @Ignore
     public void shouldHandleNoBodyPOST() throws IOException{
         HttpClientPOSTRequest request = new HttpClientPOSTRequest("localhost", server.getPort(), "/echo",
                 "");
