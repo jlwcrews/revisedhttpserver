@@ -1,6 +1,4 @@
-package no.kristiania.pgr200.jlw;
-
-import java.io.IOException;
+package no.kristiania.pgr200.jlw.server;
 
 public class HttpServerRequestHandlerEcho implements HttpServerRequestHandler {
 

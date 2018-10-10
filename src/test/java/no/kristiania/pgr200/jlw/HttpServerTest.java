@@ -1,5 +1,9 @@
 package no.kristiania.pgr200.jlw;
 
+import no.kristiania.pgr200.jlw.client.HttpClientGETRequest;
+import no.kristiania.pgr200.jlw.client.HttpClientPOSTRequest;
+import no.kristiania.pgr200.jlw.client.HttpClientResponse;
+import no.kristiania.pgr200.jlw.server.*;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -137,10 +141,9 @@ public class HttpServerTest {
     }
 
     @Test
-    @Ignore
-    public void shouldRejectInvalidMethod() throws IOException{
+    public void shouldRejectInvalidMethodwithValidPath() throws IOException{
         HttpClientGETRequest request = new HttpClientGETRequest("localhost", server.getPort(),
-                "/bogus", "PUT");
+                "/echo?body=hello+idiot", "PUT");
         HttpClientResponse response = request.execute();
         assertThat(response.getStatusCode()).isEqualTo(405);
         assertThat(response.getBody()).isEqualTo("");

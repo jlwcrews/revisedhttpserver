@@ -1,4 +1,4 @@
-package no.kristiania.pgr200.jlw;
+package no.kristiania.pgr200.jlw.server;
 
 import java.util.HashMap;
 

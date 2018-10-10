@@ -1,4 +1,6 @@
-package no.kristiania.pgr200.jlw;
+package no.kristiania.pgr200.jlw.server;
+
+import no.kristiania.pgr200.jlw.HttpUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +32,9 @@ public class HttpServerParserRequest implements HttpServerParser {
             }
             request.setHttpVersion(s[2]);
             parseParameters(parsePath());
+            if(!HttpServerConfig.SUPPORTED_METHODS.contains(request.getHttpMethod())){
+                request.setStatusCode(405);
+            }
         } catch(IndexOutOfBoundsException e){
             System.out.println("Index out of bounds on parseRequestLine.");
         } catch(NullPointerException e){

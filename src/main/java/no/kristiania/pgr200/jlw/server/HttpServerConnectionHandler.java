@@ -1,4 +1,4 @@
-package no.kristiania.pgr200.jlw;
+package no.kristiania.pgr200.jlw.server;
 
 import java.io.*;
 import java.net.Socket;
@@ -36,6 +36,7 @@ public class HttpServerConnectionHandler extends Thread {
         try {
             request = parser.parse(clientSocket.getInputStream());
             response = new HttpServerResponse(404, request.getHttpVersion());
+
             for (HttpServerRequestHandler handler: requestHandlers) {
                 if (handler.HandleRequest(request, response))
                     break;

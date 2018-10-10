@@ -1,18 +1,17 @@
-package no.kristiania.pgr200.jlw;
+package no.kristiania.pgr200.jlw.server;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 
 public class HttpServerConfig {
 
     public static String WEB_ROOT, DEFAULT_FILE, FILE_NOT_FOUND, METHOD_NOT_SUPPORTED, SERVER_NAME;
+    public static HashSet<String> SUPPORTED_METHODS = new HashSet<>();
     public static HashMap<String, String> serverConfig = new HashMap<>();
 
     static {
@@ -39,10 +38,11 @@ public class HttpServerConfig {
         }
 
         WEB_ROOT = serverConfig.get("WEB_ROOT").trim();
-        System.out.println("WEB_ROOT = " + WEB_ROOT);
         DEFAULT_FILE = serverConfig.get("DEFAULT_FILE").trim();
         FILE_NOT_FOUND = serverConfig.get("FILE_NOT_FOUND").trim();
         METHOD_NOT_SUPPORTED = serverConfig.get("METHOD_NOT_SUPPORTED").trim();
         SERVER_NAME = serverConfig.get("SERVER_NAME").trim();
+        SUPPORTED_METHODS.add("GET");
+        SUPPORTED_METHODS.add("POST");
     }
 }

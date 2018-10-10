@@ -1,7 +1,7 @@
-package no.kristiania.pgr200.jlw;
+package no.kristiania.pgr200.jlw.server;
 
-import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
+import java.nio.file.Files;
 
 public class HttpServerRequestHandlerURL implements HttpServerRequestHandler{
 
@@ -9,12 +9,12 @@ public class HttpServerRequestHandlerURL implements HttpServerRequestHandler{
     public boolean HandleRequest(HttpServerRequest request, HttpServerResponse response) throws IOException {
 
         String resourceName;
+
         if(request.getPath().contains("echo")){
             return false;
         }
         if(request.getPath().isEmpty()){
             resourceName = HttpServerConfig.DEFAULT_FILE;
-            System.out.println("Default file: " + HttpServerConfig.DEFAULT_FILE);
         } else{
             resourceName = request.getPath();
         }
@@ -32,7 +32,7 @@ public class HttpServerRequestHandlerURL implements HttpServerRequestHandler{
                 }
                 br.close();
                 response.setBody(fileContents.toString());
-                response.setContentType(getContentType(file));
+                response.setContentType(getFileContentType(resourceName));
                 response.setStatusCode(200);
 
             } catch (FileNotFoundException e) {
@@ -49,11 +49,20 @@ public class HttpServerRequestHandlerURL implements HttpServerRequestHandler{
         return true;
     }
 
-    private String getContentType(File file) {
-        String mimeType = MimetypesFileTypeMap
-                .getDefaultFileTypeMap()
-                .getContentType(file);
-        return mimeType;
+    public String getFileContentType(String fileName) {
+        String fileType = "Undetermined";
+        final File file = new File(fileName);
+        try
+        {
+            fileType = Files.probeContentType(file.toPath());
+        }
+        catch (IOException ioException)
+        {
+            System.out.println(
+                    "ERROR: Unable to determine file type for " + fileName
+                            + " due to exception " + ioException);
+        }
+        return fileType;
     }
 
 
