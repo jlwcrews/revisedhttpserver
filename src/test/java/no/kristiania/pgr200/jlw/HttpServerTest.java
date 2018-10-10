@@ -6,15 +6,23 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class HttpServerTest {
 
     private static HttpServerListener server;
+    int port = 0;
 
     @BeforeClass
     public static void startServer() throws IOException {
-        server = new HttpServerListener();
-        server.start();
+        server = new HttpServerListener(
+                Arrays.asList(new HttpServerRequestHandlerURL(),
+                        new HttpServerRequestHandlerEcho(),
+                        new HttpServerRequestHandlerTalk()),
+                new HttpServerParserRequest(),
+                new HttpServerWriterResponse()
+        );
+        server.start(0);
     }
 
     @Test

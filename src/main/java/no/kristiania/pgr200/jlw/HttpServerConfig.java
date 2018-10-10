@@ -4,11 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 public class HttpServerConfig {
 
-    public static String WEB_ROOT, DEFAULT_FILE, FILE_NOT_FOUND, METHOD_NOT_SUPPORTED;
+    public static String WEB_ROOT, DEFAULT_FILE, FILE_NOT_FOUND, METHOD_NOT_SUPPORTED, SERVER_NAME;
     public HashMap<String, String> serverConfig = new HashMap<>();
 
     public HttpServerConfig(){
@@ -45,5 +49,6 @@ public class HttpServerConfig {
         DEFAULT_FILE = serverConfig.get("DEFAULT_FILE").trim();
         FILE_NOT_FOUND = serverConfig.get("FILE_NOT_FOUND").trim();
         METHOD_NOT_SUPPORTED = serverConfig.get("METHOD_NOT_SUPPORTED").trim();
+        SERVER_NAME = serverConfig.get("SERVER_NAME").trim();
     }
 }

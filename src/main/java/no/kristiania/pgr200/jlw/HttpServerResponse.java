@@ -1,33 +1,39 @@
 package no.kristiania.pgr200.jlw;
 
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class HttpServerResponse {
 
-    private String statusLine;
-    private List<String> headers;
-    private String body;
+    private String httpVersion, body;
+    private String contentType = "text/plain";
+    private HashMap<String, String> additionalHeaders;
+    private int statusCode;
 
-    public HttpServerResponse(){
-        headers = new ArrayList<>();
+    public HttpServerResponse(int statusCode, String httpVersion)
+    {
+        this.statusCode = statusCode;
+        this.httpVersion = httpVersion;
     }
 
-    public String getStatusLine() {
-        return statusLine;
+    public int getStatusCode(){
+        return statusCode;
     }
 
-    public void setStatusLine(String statusLine) {
-        this.statusLine = statusLine;
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public List<String> getHeaders() {
-        return headers;
+    public HashMap<String,String> getAdditionalHeaders(){
+        if (additionalHeaders == null)
+            additionalHeaders = new HashMap<String,String>();
+
+        return  additionalHeaders;
     }
 
-    public void setHeaders(String header) {
-        headers.add(header);
+    public void setAdditionalHeaders(HashMap<String,String> additionalHeaders){
+        this.additionalHeaders = additionalHeaders;
     }
 
     public String getBody() {
@@ -37,4 +43,17 @@ public class HttpServerResponse {
     public void setBody(String body) {
         this.body = body;
     }
+
+    public String getHttpVersion() {
+        return this.httpVersion;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public String getContentType(){
+        return contentType;
+    }
+
 }
