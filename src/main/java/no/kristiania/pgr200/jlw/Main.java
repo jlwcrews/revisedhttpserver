@@ -9,8 +9,8 @@ public class Main {
         new HttpServerConfig();
         int port = 9000;
         HttpServerListener listener = new HttpServerListener(
-            Arrays.asList(new HttpServerRequestHandlerURL(),
-                    new HttpServerRequestHandlerEcho(),
+            Arrays.asList(new HttpServerRequestHandlerEcho(),
+                    new HttpServerRequestHandlerURL(),
                     new HttpServerRequestHandlerTalk()),
                 new HttpServerParserRequest(),
                 new HttpServerWriterResponse()

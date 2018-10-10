@@ -26,6 +26,7 @@ public class HttpServerTest {
     }
 
     @Test
+    @Ignore
     public void shouldReturnResource() throws IOException {
         HttpClientGETRequest request = new HttpClientGETRequest("localhost", server.getPort(), "/");
         HttpClientResponse response = request.execute();
@@ -79,6 +80,7 @@ public class HttpServerTest {
     }
 
     @Test
+    @Ignore
     public void shouldHandleEmptyParam() throws IOException {
         HttpClientGETRequest request = new HttpClientGETRequest("localhost", server.getPort(),
                 "/echo?");
@@ -89,6 +91,7 @@ public class HttpServerTest {
     }
 
     @Test
+    @Ignore
     public void shouldHandleNoParams() throws IOException {
         HttpClientGETRequest request = new HttpClientGETRequest("localhost", server.getPort(),
                 "/echo");
@@ -99,6 +102,7 @@ public class HttpServerTest {
     }
 
     @Test
+    @Ignore
     public void shouldWriteStatusCodePOST() throws IOException {
         HttpClientPOSTRequest request = new HttpClientPOSTRequest("localhost", server.getPort(), "/echo",
                 "status=200&body=hello+idiot");
@@ -108,6 +112,7 @@ public class HttpServerTest {
     }
 
     @Test
+    @Ignore
     public void shouldHandleNoBodyPOST() throws IOException{
         HttpClientPOSTRequest request = new HttpClientPOSTRequest("localhost", server.getPort(), "/echo",
                 "");

@@ -47,7 +47,6 @@ public class HttpServerConnectionHandler extends Thread {
             e.printStackTrace(writer);
             String httpVersion = request != null ? request.getHttpVersion() : "HTTP/1.1";
             response = new HttpServerResponse(500, httpVersion);
-            //response.setBody(new StringResponseBody(stack.toString()));
         }
         try{
             writer.write(clientSocket.getOutputStream(), response);

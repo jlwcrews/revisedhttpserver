@@ -13,10 +13,16 @@ public class HttpServerWriterResponse implements  HttpServerWriter {
         writeCommonHeaders(writer, response);
         writeAdditionalHeaders(writer, response);
         writer.write("\r\n");
+        writeBody(response, writer);
         writer.flush();
+    }
 
-        if (response.getBody() != null)
-            response.getBody();
+    private void writeBody(HttpServerResponse response, OutputStreamWriter writer) throws IOException {
+        if (response.getBody() != null) {
+            writer.write(response.getBody());
+        } else {
+            writer.write("");
+        }
     }
 
     private void writeStatus(OutputStreamWriter writer, HttpServerResponse response) throws IOException {

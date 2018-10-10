@@ -6,12 +6,11 @@ import java.net.Socket;
 import java.util.List;
 
 public class HttpServerListener {
-    private boolean running;
+    private boolean running = true;
     private List<HttpServerRequestHandler> requestHandlers;
     private HttpServerParser requestParser;
     private HttpServerWriter responseWriter;
     private int actualPort;
-
 
     public HttpServerListener(List<HttpServerRequestHandler> requestHandlers, HttpServerParser requestParser, HttpServerWriter responseWriter){
         this.requestHandlers = requestHandlers;
@@ -26,7 +25,8 @@ public class HttpServerListener {
     }
 
     public void serverThread(ServerSocket serverSocket) {
-        while (true) {
+
+        while (running) {
             try {
                 Socket clientSocket = serverSocket.accept();
                 Thread t = new HttpServerConnectionHandler(clientSocket, requestHandlers, requestParser, responseWriter);

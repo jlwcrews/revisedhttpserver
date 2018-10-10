@@ -19,8 +19,8 @@ public class HttpServerRequestHandlerEcho implements HttpServerRequestHandler {
             response.setBody(request.getParameter("body"));
         }
 
-        if (request.getParameter("location") != null) {
-            response.getAdditionalHeaders().put("Location", request.getParameter("location"));
+        if (request.getParameter("Location") != null) {
+            response.getAdditionalHeaders().put("Location", request.getParameter("Location"));
         }
 
         return true;

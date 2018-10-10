@@ -9,6 +9,9 @@ public class HttpServerRequestHandlerURL implements HttpServerRequestHandler{
     public boolean HandleRequest(HttpServerRequest request, HttpServerResponse response) throws IOException {
 
         String resourceName;
+        if(request.getPath().contains("echo")){
+            return false;
+        }
         if(request.getPath().isEmpty()){
             resourceName = HttpServerConfig.DEFAULT_FILE;
         } else{
