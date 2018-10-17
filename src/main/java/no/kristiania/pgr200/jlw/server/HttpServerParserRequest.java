@@ -60,7 +60,9 @@ public class HttpServerParserRequest implements HttpServerParser {
                 try {
                     request.setParameter(param.substring(0, delimiterPos), URLDecoder.decode(param.substring(delimiterPos + 1), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
-                    System.out.println("Error parsing parameters");
+                    System.out.println("Error parsing parameters.");
+                } catch (StringIndexOutOfBoundsException e){
+                    System.out.println("Error parsing body.");
                 }
             }
         }
