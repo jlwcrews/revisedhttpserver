@@ -11,7 +11,8 @@ public class Main {
         new HttpServerConfig();
         int port = 9010;
         HttpServerListener listener = new HttpServerListener(
-            Arrays.asList(new HttpServerRequestHandlerEcho(),
+            Arrays.asList(new HttpServerRequestHandlerBadHttpMethod(),
+                    new HttpServerRequestHandlerEcho(),
                     new HttpServerRequestHandlerURL(),
                     new HttpServerRequestHandlerTalk()),
                 new HttpServerParserRequest(),

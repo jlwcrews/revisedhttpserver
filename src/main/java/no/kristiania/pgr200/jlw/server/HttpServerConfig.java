@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-import static java.util.stream.Collectors.toMap;
-
 public class HttpServerConfig {
 
     public static String WEB_ROOT, DEFAULT_FILE, FILE_NOT_FOUND, METHOD_NOT_SUPPORTED, SERVER_NAME;

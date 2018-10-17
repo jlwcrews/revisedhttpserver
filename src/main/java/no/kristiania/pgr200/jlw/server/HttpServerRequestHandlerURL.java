@@ -24,7 +24,7 @@ public class HttpServerRequestHandlerURL implements HttpServerRequestHandler{
             BufferedReader br = null;
             try {
                 br = new BufferedReader(new FileReader(file));
-                StringBuffer fileContents = new StringBuffer();
+                StringBuilder fileContents = new StringBuilder();
                 String fileInput = br.readLine();
                 while (fileInput != null) {
                     fileContents.append(fileInput);

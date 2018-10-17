@@ -9,8 +9,8 @@ import java.net.URLDecoder;
 
 public class HttpServerParserRequest implements HttpServerParser {
 
-    public HttpServerRequest request;
-    public InputStream input;
+    private HttpServerRequest request;
+    private InputStream input;
 
     public HttpServerRequest parse(InputStream input) throws IOException {
         request = new HttpServerRequest();
@@ -21,7 +21,7 @@ public class HttpServerParserRequest implements HttpServerParser {
         return request;
     }
 
-    public void parseRequestLine() throws IOException{
+    private void parseRequestLine() throws IOException{
         try {
             String[] s = HttpUtils.readNextLine(input).split("[ ]");
             request.setHttpMethod(s[0]);
@@ -42,7 +42,7 @@ public class HttpServerParserRequest implements HttpServerParser {
         }
     }
 
-    public String parsePath() {
+    private String parsePath() {
         String uri[] = request.getURL().split("[?]");
         request.setPath(uri[0]);
         if(uri.length > 1) {
@@ -52,7 +52,7 @@ public class HttpServerParserRequest implements HttpServerParser {
         }
     }
 
-    public void parseParameters(String paramString) {
+    private void parseParameters(String paramString) {
         if(!paramString.isEmpty()) {
             String queryParams[] = paramString.split("&");
             for (String param : queryParams) {
@@ -66,7 +66,7 @@ public class HttpServerParserRequest implements HttpServerParser {
         }
     }
 
-    public void parseHeaderLines() throws IOException {
+    private void parseHeaderLines() throws IOException {
         String line = HttpUtils.readNextLine(input);
         while(!line.isEmpty()) {
             int colonPos = line.indexOf(":");
@@ -75,7 +75,7 @@ public class HttpServerParserRequest implements HttpServerParser {
         }
     }
 
-    public void parseBody() throws NullPointerException{
+    private void parseBody() throws NullPointerException{
         try {
             StringBuilder body = new StringBuilder();
             if(request.getHeader("Content-Length") != null) {
