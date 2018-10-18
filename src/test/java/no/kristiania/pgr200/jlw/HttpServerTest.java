@@ -148,4 +148,13 @@ public class HttpServerTest {
         assertThat(response.getBody()).isEqualTo("");
     }
 
+    @Test
+    public void shouldRejectDeleteMethod() throws IOException{
+        HttpClientGETRequest request = new HttpClientGETRequest("localhost", server.getPort(),
+                "/", "DELETE");
+        HttpClientResponse response = request.execute();
+        assertThat(response.getStatusCode()).isEqualTo(405);
+        assertThat(response.getBody()).isEqualTo("");
+    }
+
 }

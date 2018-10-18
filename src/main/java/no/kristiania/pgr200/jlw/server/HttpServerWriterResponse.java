@@ -19,12 +19,7 @@ public class HttpServerWriterResponse implements  HttpServerWriter {
     }
 
     private void writeBody(OutputStreamWriter writer, HttpServerResponse response) throws IOException {
-        /*if (response.getBody() != null) {
-            writer.write(response.getBody());
-        } else {
-            writer.write("");
-        }*/
-        writer.write(response.getBody().orElse("None"));
+        writer.write(response.getBody().orElse(""));
     }
 
     private void writeStatus(OutputStreamWriter writer, HttpServerResponse response) throws IOException {
