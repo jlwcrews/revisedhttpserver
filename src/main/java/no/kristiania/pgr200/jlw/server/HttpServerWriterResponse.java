@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpServerWriterResponse implements  HttpServerWriter {
+
     public void write(OutputStream stream, HttpServerResponse response) throws IOException {
         OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
         writeStatus(writer, response);
@@ -18,11 +19,12 @@ public class HttpServerWriterResponse implements  HttpServerWriter {
     }
 
     private void writeBody(OutputStreamWriter writer, HttpServerResponse response) throws IOException {
-        if (response.getBody() != null) {
+        /*if (response.getBody() != null) {
             writer.write(response.getBody());
         } else {
             writer.write("");
-        }
+        }*/
+        writer.write(response.getBody().orElse("None"));
     }
 
     private void writeStatus(OutputStreamWriter writer, HttpServerResponse response) throws IOException {
@@ -33,9 +35,9 @@ public class HttpServerWriterResponse implements  HttpServerWriter {
         writeHeader(writer,"X-Server-Name", HttpServerConfig.SERVER_NAME);
         writeHeader(writer, "Date", LocalDate.now());
         writeHeader(writer, "Connection", "Close");
-        if (response.getBody() != null) {
+        if (response.getBody().isPresent()) {
             writeHeader(writer,"Content-Type", response.getContentType());
-            writeHeader(writer, "Content-Length", response.getBody().length());
+            writeHeader(writer, "Content-Length", response.getBody().get().length());
         }else {
             writeHeader(writer, "Content-Length", 0);
         }

@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         new HttpServerConfig();
         int port = 9010;
+        System.out.println("Server listening on port " + port);
         HttpServerListener listener = new HttpServerListener(
             Arrays.asList(new HttpServerRequestHandlerBadHttpMethod(),
                     new HttpServerRequestHandlerEcho(),

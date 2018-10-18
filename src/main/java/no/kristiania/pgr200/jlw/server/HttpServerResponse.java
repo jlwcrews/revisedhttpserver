@@ -1,6 +1,7 @@
 package no.kristiania.pgr200.jlw.server;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class HttpServerResponse {
 
@@ -34,8 +35,8 @@ public class HttpServerResponse {
         this.additionalHeaders = additionalHeaders;
     }
 
-    public String getBody() {
-        return body;
+    public Optional<String> getBody() {
+        return Optional.ofNullable(body);
     }
 
     public void setBody(String body) {
