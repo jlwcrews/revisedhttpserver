@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-public class HttpServerParserRequest implements HttpServerParser {
+public class HttpServerParserRequest {
 
     private HttpServerRequest request;
     private InputStream input;
@@ -32,9 +32,6 @@ public class HttpServerParserRequest implements HttpServerParser {
             }
             request.setHttpVersion(s[2]);
             parseParameters(parsePath());
-            if(!HttpServerConfig.SUPPORTED_METHODS.contains(request.getHttpMethod())){
-                request.setStatusCode(405);
-            }
         } catch(IndexOutOfBoundsException e){
             System.out.println("Index out of bounds on parseRequestLine.");
         } catch(NullPointerException e){
@@ -58,22 +55,27 @@ public class HttpServerParserRequest implements HttpServerParser {
             for (String param : queryParams) {
                 int delimiterPos = param.indexOf("=");
                 try {
-                    request.setParameter(param.substring(0, delimiterPos), URLDecoder.decode(param.substring(delimiterPos + 1), "UTF-8"));
+                    if(delimiterPos > -1) {
+                        request.setParameter(param.substring(0, delimiterPos), URLDecoder.decode(param.substring(delimiterPos + 1), "UTF-8"));
+                    }
                 } catch (UnsupportedEncodingException e) {
                     System.out.println("Error parsing parameters.");
                 } catch (StringIndexOutOfBoundsException e){
-                    System.out.println("Error parsing body.");
+                    System.out.println("Malformed parameter " + param + " rejected.");
                 }
             }
         }
     }
 
     private void parseHeaderLines() throws IOException {
+
         String line = HttpUtils.readNextLine(input);
         while(!line.isEmpty()) {
             int colonPos = line.indexOf(":");
-            request.setHeader(line.substring(0, colonPos), line.substring(colonPos+1));
-            line = HttpUtils.readNextLine(input);
+            if(colonPos > -1) {
+                request.setHeader(line.substring(0, colonPos), line.substring(colonPos + 1));
+                line = HttpUtils.readNextLine(input);
+            }
         }
     }
 
@@ -86,6 +88,7 @@ public class HttpServerParserRequest implements HttpServerParser {
                         int c = input.read();
                         body.append((char) c);
                     } catch (IOException e) {
+                        System.out.println("Error parsing body.");
                     }
                 }
             }

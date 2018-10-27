@@ -7,23 +7,14 @@ import java.util.List;
 public class HttpServerConnectionHandler extends Thread {
 
     private final List<HttpServerRequestHandler> requestHandlers;
-    private final HttpServerParser parser;
+    private final HttpServerParserRequest parser;
     private final HttpServerWriter writer;
     private Socket clientSocket;
-    private InputStream input;
-    private OutputStream output;
 
-    public HttpServerConnectionHandler(Socket clientSocket, List<HttpServerRequestHandler> requestHandlers, HttpServerParser parser, HttpServerWriter writer) {
+    public HttpServerConnectionHandler(Socket clientSocket, List<HttpServerRequestHandler> requestHandlers, HttpServerParserRequest parser, HttpServerWriter writer) {
         System.out.println();
 
         this.clientSocket = clientSocket;
-        try {
-            input = clientSocket.getInputStream();
-            output = clientSocket.getOutputStream();
-        } catch (IOException e) {
-            System.out.println("Error opening input and output streams.");
-            e.printStackTrace();
-        }
         this.requestHandlers = requestHandlers;
         this.parser = parser;
         this.writer = writer;
@@ -43,17 +34,12 @@ public class HttpServerConnectionHandler extends Thread {
             }
         }
         catch(IOException e) {
-            StringWriter stack = new StringWriter();
-            PrintWriter writer = new PrintWriter(stack);
-            e.printStackTrace(writer);
-            String httpVersion = request != null ? request.getHttpVersion() : "HTTP/1.1";
-            response = new HttpServerResponse(500, httpVersion);
+            response = new HttpServerResponse(500, request.getHttpVersion());
         }
         try{
             writer.write(clientSocket.getOutputStream(), response);
         }catch(IOException e){
             System.err.println("Error writing response");
-            e.printStackTrace();
         }
     }
 }

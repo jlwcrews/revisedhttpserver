@@ -8,11 +8,11 @@ import java.util.List;
 public class HttpServerListener {
     private boolean running = true;
     private List<HttpServerRequestHandler> requestHandlers;
-    private HttpServerParser requestParser;
+    private HttpServerParserRequest requestParser;
     private HttpServerWriter responseWriter;
     private int actualPort;
 
-    public HttpServerListener(List<HttpServerRequestHandler> requestHandlers, HttpServerParser requestParser, HttpServerWriter responseWriter){
+    public HttpServerListener(List<HttpServerRequestHandler> requestHandlers, HttpServerParserRequest requestParser, HttpServerWriter responseWriter){
         this.requestHandlers = requestHandlers;
         this.requestParser  = requestParser;
         this.responseWriter = responseWriter;
