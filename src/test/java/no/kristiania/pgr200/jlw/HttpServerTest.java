@@ -109,7 +109,7 @@ public class HttpServerTest {
                 "status=200&body=hello+idiot");
         HttpClientResponse response = request.execute();
         assertThat(response.getStatusCode()).isEqualTo(200);
-        assertThat(response.getBody().contains("hello idiot"));
+        assertThat(response.getBody()).isEqualTo("hello idiot");
     }
 
     @Test
@@ -118,7 +118,7 @@ public class HttpServerTest {
                 "");
         HttpClientResponse response = request.execute();
         assertThat(response.getStatusCode()).isEqualTo(200);
-        assertThat(response.getBody().isEmpty());
+        assertThat(response.getBody()).isEqualTo("");
     }
 
     @Test

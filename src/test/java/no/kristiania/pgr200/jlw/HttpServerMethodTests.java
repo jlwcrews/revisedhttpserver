@@ -13,6 +13,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class HttpServerMethodTests {
 
+    @Test
+    private void ShouldParseRequestLine() throws IOException{
+        InputStream input = createInputStream("GET / HTTP/1.1");
+        HttpServerParserRequest parser = new HttpServerParserRequest();
+        HttpServerRequest request = new HttpServerRequest();
+
+
+    }
+
     private InputStream createInputStream(String testString) {
         return new ByteArrayInputStream(testString.getBytes());
     }

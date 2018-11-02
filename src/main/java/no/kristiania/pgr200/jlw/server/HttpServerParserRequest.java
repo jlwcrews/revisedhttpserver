@@ -1,7 +1,5 @@
 package no.kristiania.pgr200.jlw.server;
 
-import no.kristiania.pgr200.jlw.HttpUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
